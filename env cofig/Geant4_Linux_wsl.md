@@ -30,15 +30,20 @@ sudo passwd root
 sudo apt-get install build-essential
 ```
 
+- openssl安装
+```
+sudo apt-get install libssl-dev
+```
+
 - cmake安装
 ```bash
 wget http://www.cmake.org/files/v3.28/cmake-3.28.3.tar.gz //打开该网址找到该压缩文件并下载
 tar -xvf cmake-3.28.3.tar.gz //对该压缩文件解压
 cd cmake-3.28.3
 ./configure
-make
-sudo apt-get install checkinstall
-sudo checkinstall
+make -j24
+sudo apt-get install checkinstall 
+sudo checkinstall //无脑回车即可
 sudo make install
 ```
 - 在geant4文件中安装clhep
@@ -53,7 +58,7 @@ cd 2.4.7.1
 mkdir build
 cd build
 cmake ../CLHEP 
-make 
+make -j24
 sudo make install
 ```
 - 安装Expat与Zlib
@@ -72,7 +77,7 @@ cd xerces-c-3.2.5
 mkdir build
 cd build
 cmake ../
-make
+make -j24
 make test
 sudo make install
 
