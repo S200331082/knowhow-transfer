@@ -72,8 +72,8 @@ sudo apt install -y zlib1g-dev
 
 cd /home/geant4
 wget https://dlcdn.apache.org//xerces/c/3/sources/xerces-c-3.3.0.tar.gz
-tar -xvf ./xerces-c-3.2.5.tar.gz
-cd xerces-c-3.2.5
+tar -xvf ./xerces-c-3.3.0.tar.gz
+cd xerces-c-3.3.0
 mkdir build
 cd build
 cmake ../
