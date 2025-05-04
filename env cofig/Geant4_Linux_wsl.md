@@ -158,11 +158,11 @@ sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 cd /home/geant4
 wget ...
 tar -xvf geant4-v11.3.1.tar.gz
-mkdir geant4-v11.2.1-install
-mkdir geant4-v11.2.1-build
-cd geant4-v11.2.1-build //这一步一定要执行
-sudo cmake -DCMAKE_INSTALL_PREFIX=/home/geant4/geant4-v11.2.1-install -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACE_X11=ON -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=OFF -DGEANT4_USE_QT=ON /home/geant4/geant4-v11.2.1
-// DGEANT4_INSTALL_DATA=ON会自动下载data文件夹至home/geant4/geant4-v11.2.1-build文件夹中
+mkdir geant4-v11.3.1-install
+mkdir geant4-v11.3.1-build
+cd geant4-v11.3.1-build //这一步一定要执行
+sudo cmake -DCMAKE_INSTALL_PREFIX=/home/geant4/geant4-v11.3.1-install -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACE_X11=ON -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=OFF -DGEANT4_USE_QT=ON /home/geant4/geant4-v11.3.1
+// DGEANT4_INSTALL_DATA=ON会自动下载data文件夹至home/geant4/geant4-v11.3.1-build文件夹中
 // 速度太慢容易出错，建议OFF，make install 完成之后手动下载
 sudo make -j24 //线程多死命薅
 sudo make install
@@ -171,8 +171,8 @@ sudo make install
 ```bash
 gedit ~/.bashrc
 // 末尾加以下两句
-source  home/geant4/geant4-v11.2.1-install/bin/geant4.sh
-source  home/geant4/geant4-v11.2.1-install/share/Geant4/geant4make/geant4make.sh
+source  home/geant4/geant4-v11.3.1-install/bin/geant4.sh
+source  home/geant4/geant4-v11.3.1-install/share/Geant4/geant4make/geant4make.sh
 ```
 - 手动下载data包
 查看geant4make.sh中的Datasets配置：
