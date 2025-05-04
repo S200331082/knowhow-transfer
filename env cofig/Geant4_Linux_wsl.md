@@ -156,7 +156,7 @@ sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 
 ```bash
 cd /home/geant4
-wget ...
+wget https://gitlab.cern.ch/geant4/geant4/-/archive/v11.3.1/geant4-v11.3.1.tar.gz
 tar -xvf geant4-v11.3.1.tar.gz
 mkdir geant4-v11.3.1-install
 mkdir geant4-v11.3.1-build
