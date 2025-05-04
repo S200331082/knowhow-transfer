@@ -98,6 +98,11 @@ sudo make install
         chmod +x qt-opensource-linux-x64-5.14.2.run
         ./qt-opensource-linux-x64-5.14.2.run
         ```
+    - 上述运行可能会出现没有相关插件的错误，确保已经安装相关库以及设置环境变量
+        ```bash
+            sudo apt-get install libxcb-xinerama0
+            export DISPLAY=:0
+        ```
     - 可视化界面下安装，登录账号，勾选协议，一路next，安装路径选择`/home/geant4/Qt5`(新建)
     - 安装包勾选Qt目录下的`5.14.2`的所有，开始install
 
