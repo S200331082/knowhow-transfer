@@ -132,6 +132,64 @@ export PATH=$QTDIR/bin:$PATH
 export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
 ```
 
+- 上述qt5.14.2安装后对于B1的编译没有影响，但是其他examples链接库用的qt版本是5.15，需要安装5.15
+    
+    - 安装包此处下载
+
+    ```bash
+    tar -xvf qt-everywhere-src-5.15.2.tar.xz
+
+    cd qt-everywhere-src-5.15.2 
+    
+    //修改.qt-everywhere-src-5.15.2/qtbase/src/corelib/global/qglobal.h, 增加 "#include <limits>"在"#include <alogrithm>"后面
+
+    ./configure
+
+    //等待一会，第一个选项选o，第二个选项选y,如果中间出错了，需要清除缓存之后再重新安装
+    sudo rm -rf config.cache
+    ./configure 
+    ```
+
+    - 开始编译
+    
+    ```bash
+    make -j24 // 半小时
+    sudo make install
+    ```
+
+    - qtchooser路径配置
+    这里的路径配置可能和上面的5.14的产生交叉了，如果没有安装上述5.14的话，qtchooser的.conf文件可能不在/usr/lib/x86_64-linux-gnu/qt-default/qtchooser路径下，我是执行了下面的命令后，发现在原来的default.conf下出现了一个新的conf
+    ```bash
+    qtchooser -install qt-5.15.2 /usr/local/Qt-5.15.2/bin/qmake
+    export QT_SELECT=qt-5.15.2
+    ```
+
+    ![alt text](../md_pics/conf.png)
+
+    这时候要在这个新的conf文件下，去做原来在default.conf下的操作，只是路径要变成下面这两个，因为手动编译安装的qt路径不一样：
+    ```bash
+    /home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/bin
+    /home/fanghaodu/qt-everywhere-src-5.15.2/qtbase
+    ```
+
+    然后/etc/profile里的QT_DIR要变：
+
+    ```bash
+    export QTDIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase  //改为安装路径的bin的前一级
+    ```
+
+    这时候检验一下qt版本对了不：
+    ```bash
+    qmake -v //5.15.2就对了
+    ```
+
+
+
+
+
+
+
+
 - 继续运行以下
 ```bash
 sudo apt-get install -y dpkg
@@ -161,7 +219,9 @@ tar -xvf geant4-v11.3.1.tar.gz
 mkdir geant4-v11.3.1-install
 mkdir geant4-v11.3.1-build
 cd geant4-v11.3.1-build //这一步一定要执行
-sudo cmake -DCMAKE_INSTALL_PREFIX=/home/geant4/geant4-v11.3.1-install -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACE_X11=ON -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=OFF -DGEANT4_USE_QT=ON /home/geant4/geant4-v11.3.1
+
+//下面的命令有点长，包含了参数配置，qt5.15.2手动安装后，要改环境变量
+sudo cmake -DCMAKE_INSTALL_PREFIX=/home/geant4/geant4-v11.3.1-install -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACE_X11=ON -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=OFF -DGEANT4_USE_QT=ON  -DQT_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5 -DQt5Core_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5Core -DQt5Gui_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5Gui -DQt5OpenGL_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5OpenGL -DQt5Widgets_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5Widgets -DQt5_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5 /home/geant4/geant4-v11.3.1
 // DGEANT4_INSTALL_DATA=ON会自动下载data文件夹至home/geant4/geant4-v11.3.1-build文件夹中
 // 速度太慢容易出错，建议OFF，make install 完成之后手动下载
 sudo make -j24 //线程多死命薅，可能出现警告make[1]: warning:  Clock skew detected.  Your build may be incomplete. 是wsl时间戳的问题，同步一下和windows的事件
