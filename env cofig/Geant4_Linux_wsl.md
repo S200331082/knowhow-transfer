@@ -164,28 +164,52 @@ cd geant4-v11.3.1-build //这一步一定要执行
 sudo cmake -DCMAKE_INSTALL_PREFIX=/home/geant4/geant4-v11.3.1-install -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACE_X11=ON -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=OFF -DGEANT4_USE_QT=ON /home/geant4/geant4-v11.3.1
 // DGEANT4_INSTALL_DATA=ON会自动下载data文件夹至home/geant4/geant4-v11.3.1-build文件夹中
 // 速度太慢容易出错，建议OFF，make install 完成之后手动下载
-sudo make -j24 //线程多死命薅
+sudo make -j24 //线程多死命薅，可能出现警告make[1]: warning:  Clock skew detected.  Your build may be incomplete. 是wsl时间戳的问题，同步一下和windows的事件
+sudo hwclock -s //再make clean 重新make检验下警告还在不
 sudo make install
 ```
 - 添加路径
 ```bash
 gedit ~/.bashrc
 // 末尾加以下两句
-source  home/geant4/geant4-v11.3.1-install/bin/geant4.sh
-source  home/geant4/geant4-v11.3.1-install/share/Geant4/geant4make/geant4make.sh
+source  /home/geant4/geant4-v11.3.1-install/bin/geant4.sh
+source  /home/geant4/geant4-v11.3.1-install/share/Geant4/geant4make/geant4make.sh
 ```
 - 手动下载data包
 查看geant4make.sh中的Datasets配置：
 
 ![alt text](../md_pics/G4Datasets.png)
 
-根据版本信息在官网把包全部下载下来后，`cp`命令复制到`home/geant4/geant4-v11.3.1-install/share/Geant4-11.3.1/data`并解压
-
-- 此处有坑，G4EMLOW这个包网站首页没有下载地址，点击[此处](https://drive.google.com/drive/folders/1Q56UyTUp8c1dDYxmid3RjsoQRfGuzpGW?usp=drive_link)下载
-
-
-
-
+根据版本信息在官网下载至`/home/geant4/geant4-v11.3.1-install/share/Geant4/data`目录
+```bash
+wget https://cern.ch/geant4-data/datasets/G4NDL.4.7.1.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4EMLOW.8.6.1.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4PhotonEvaporation.6.1.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4RadioactiveDecay.6.1.2.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4PARTICLEXS.4.1.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4PII.1.3.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4RealSurface.2.2.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4SAIDDATA.2.0.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4ABLA.3.3.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4INCL.1.2.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4ENSDFSTATE.3.0.tar.gz
+wget https://cern.ch/geant4-data/datasets/G4CHANNELING.1.0.tar.gz
+```
+并解压
+```bash
+tar -xvf G4NDL.4.7.1.tar.gz
+tar -xvf G4EMLOW.8.6.1.tar.gz
+tar -xvf G4PhotonEvaporation.6.1.tar.gz
+tar -xvf G4RadioactiveDecay.6.1.2.tar.gz
+tar -xvf G4PARTICLEXS.4.1.tar.gz
+tar -xvf G4PII.1.3.tar.gz
+tar -xvf G4RealSurface.2.2.tar.gz
+tar -xvf G4SAIDDATA.2.0.tar.gz
+tar -xvf G4ABLA.3.3.tar.gz
+tar -xvf G4INCL.1.2.tar.gz
+tar -xvf G4ENSDFSTATE.3.0.tar.gz
+tar -xvf G4CHANNELING.1.0.tar.gz
+```
 
 
 ### 运行测试
@@ -198,9 +222,9 @@ source ~/.bashrc
 cmake ../
 make -j24
 ```
-编译成功后进build找可执行文件`exampleB1`,执行
+编译成功后在build找可执行文件`exampleB1`,执行
 ```bash
-exampleB1
+./exampleB1
 ```
 出现以下gui说明安装成功：
 
