@@ -203,7 +203,8 @@ sudo apt-get install -y libcanberra-gtk-module
 ### G4 Install
 - 为cmake指定寻找qt库的路径:
 ```bash
-export CMAKE_PREFIX_PATH=home/geant4/Qt5/5.14.2/gcc_64/lib/cmake
+# export CMAKE_PREFIX_PATH=home/geant4/Qt5/5.14.2/gcc_64/lib/cmake 这是5.14的安装,下面是5.15的安装
+export CMAKE_PREFIX_PATH=/home/fanghaodu/qt5.15.2/lib/cmake
 sudo apt-get install build-essential apt-file gcc g++ autoconf automake automake1.11 tcl8.6-dev tk8.6-dev libglu1-mesa-dev libgl1-mesa-dev libxt-dev libxmu-dev libglew-dev libglw1-mesa-dev gfortran inventor-dev libxaw7-dev freeglut3-dev libxerces-c-dev libxmltok1-dev libxi-dev libclutter-gtk-1.0-0 cmake libxmlrpc-core-c3-dev tclxml tclxml-dev libexpat1-dev libgtk2.0-dev libxpm-dev x11proto-gl-dev x11proto-input-dev -y
  
 sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools 
@@ -221,11 +222,11 @@ mkdir geant4-v11.3.1-build
 cd geant4-v11.3.1-build //这一步一定要执行
 
 //下面的命令有点长，包含了参数配置，qt5.15.2手动安装后，要改环境变量
-sudo cmake -DCMAKE_INSTALL_PREFIX=/home/geant4/geant4-v11.3.1-install -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACE_X11=ON -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=OFF -DGEANT4_USE_QT=ON  -DQT_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5 -DQt5Core_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5Core -DQt5Gui_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5Gui -DQt5OpenGL_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5OpenGL -DQt5Widgets_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5Widgets -DQt5_DIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/lib/cmake/Qt5 /home/geant4/geant4-v11.3.1
+sudo cmake -DCMAKE_INSTALL_PREFIX=/home/geant4/geant4-v11.3.1-install -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACE_X11=ON -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=OFF -DGEANT4_USE_QT=ON  -DQT_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5 -DQt5Core_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5Core -DQt5Gui_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5Gui -DQt5OpenGL_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5OpenGL -DQt5Widgets_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5Widgets -DQt5_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5 /home/geant4/geant4-v11.3.1
 // DGEANT4_INSTALL_DATA=ON会自动下载data文件夹至home/geant4/geant4-v11.3.1-build文件夹中
 // 速度太慢容易出错，建议OFF，make install 完成之后手动下载
-sudo make -j24 //线程多死命薅，可能出现警告make[1]: warning:  Clock skew detected.  Your build may be incomplete. 是wsl时间戳的问题，同步一下和windows的事件
-sudo hwclock -s //再make clean 重新make检验下警告还在不
+sudo hwclock -s //可能出现警告make[1]: warning:  Clock skew detected.  Your build may be incomplete. 是wsl时间戳的问题，同步一下和windows的事件
+sudo make -j24 
 sudo make install
 ```
 - 添加路径
@@ -275,7 +276,7 @@ tar -xvf G4CHANNELING.1.0.tar.gz
 ### 运行测试
 
 ```bash
-cd home/geant4/geant4-v11.3.1/examples/basic/B1
+cd /home/geant4/geant4-v11.3.1/examples/basic/B1
 mkdir build
 cd build/
 source ~/.bashrc
