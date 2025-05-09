@@ -21,7 +21,7 @@ sudo passwd root
 // 后续只用su命令，输入密码进入root
 
 wsl --manage Ubuntu-22.04 --set-default-user root 
-//默认root登录，方便vscode直接修改文件
+//powershell管理员打开，默认root登录，方便vscode直接修改文件
 
 ```
 
