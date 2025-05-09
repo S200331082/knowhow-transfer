@@ -22,6 +22,7 @@ sudo passwd root
 
 wsl --manage Ubuntu-22.04 --set-default-user root 
 //powershell管理员打开，默认root登录，方便vscode直接修改文件
+//这样修改之后可能代码无法跳转，先把原用户文件夹下的.vscode-server删掉，然后重新连接，再到插件页面安装C++ package
 
 ```
 
