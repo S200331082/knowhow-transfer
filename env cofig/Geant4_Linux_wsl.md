@@ -19,7 +19,12 @@ wsl --shutdown
 sudo passwd root
 // 设置密码
 // 后续只用su命令，输入密码进入root
+
+wsl --manage Ubuntu-22.04 --set-default-user root 
+//默认root登录，方便vscode直接修改文件
+
 ```
+
 
 - VScode下载WSL插件，`ctrl shift P`选择“连接WSL”
 
