@@ -33,24 +33,21 @@ wsl --manage Ubuntu-22.04 --set-default-user root
 ### Preview
 - gcc安装
 ```bash
-sudo apt-get install build-essential
+
+sudo apt update
+sudo apt upgrade
+sudo apt-get install build-essential -y
 ```
 
 - openssl安装
 ```
-sudo apt-get install libssl-dev
+sudo apt-get install libssl-dev -y
 ```
 
-- cmake安装
+- cmake\ccmake安装
 ```bash
-wget http://www.cmake.org/files/v3.28/cmake-3.28.3.tar.gz //打开该网址找到该压缩文件并下载
-tar -xvf cmake-3.28.3.tar.gz //对该压缩文件解压
-cd cmake-3.28.3
-./configure
-make -j24
-sudo apt-get install checkinstall 
-sudo checkinstall //无脑回车即可
-sudo make install
+apt  install -y cmake  # version 3.22.1-1ubuntu1.22.04.2
+apt  install -y cmake-curses-gui  # version 3.22.1-1ubuntu1.22.04.2
 ```
 - 在geant4文件中安装clhep
 ```bash
@@ -67,10 +64,12 @@ cmake ../CLHEP
 make -j24
 sudo make install
 ```
-- 安装Expat与Zlib
+- 安装Expat与Zlib、gedit
 ```bash
 sudo apt-get install -y libexpat-dev
 sudo apt install -y zlib1g-dev
+sudo apt-get install -y gedit
+apt install unzip
 ```
 
 - 在geant4文件夹中安装xerce
@@ -89,132 +88,114 @@ sudo make install
 
 ```
 
-- 在geant4文件夹中安装qt
 
-    - 先到qt官网申请个账号
 
-    - 先下载[`qt-opensource-linux-x64-5.14.2.run`]( https://pan.baidu.com/s/1VyiY70Nj_MdrrdLvniXqcw)，密码g2n5
-
-    - win和linux文件复制,假设你要将 `C:\Users\YourUsername\Documents\file.txt` 移动到 WSL 中的 `/home/yourusername/` 目录下：
-        ```bash
-        cp /mnt/c/Users/YourUsername/Documents/file.txt /home/yourusername/
-        ```
-    - 运行安装.run文件
-        ```bash
-        chmod +x qt-opensource-linux-x64-5.14.2.run
-        ./qt-opensource-linux-x64-5.14.2.run
-        ```
-    - 上述运行可能会出现没有相关插件的错误，确保已经安装相关库以及设置环境变量
-        ```bash
-            sudo apt-get install libxcb-xinerama0
-            export DISPLAY=:0
-        ```
-    - 可视化界面下安装，登录账号，勾选协议，一路next，安装路径选择`/home/geant4/Qt5`(新建)
-    - 安装包勾选Qt目录下的`5.14.2`的所有，开始install
-
-- 继续安装qt相关的包并进行配置
-```bash
-sudo apt-get install qt5-qmake
-sudo apt-get install qtbase5-dev
-
-sudo apt-get install -y vim
-sudo apt-get install -y gedit
-cd /usr/lib/x86_64-linux-gnu/qt-default/qtchooser
-sudo gedit default.conf
-```
-
-- gedit可视化界面显示后，末尾写入以下指令并保存
-```bash
-/home/geant4/Qt5/5.14.2/gcc_64/bin
-/home/geant4/Qt5/5.14.2/gcc_64
-```
-
-- qmake设置
-```bash
-sudo gedit /etc/profile
-// 可视化界面打开后写入以下指令
-export QTDIR=/home/geant4/Qt5/5.14.2/gcc_64
-export PATH=$QTDIR/bin:$PATH
-export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
-```
-
-- 上述qt5.14.2安装后对于B1的编译没有影响，但是其他examples链接库用的qt版本是5.15，需要安装5.15
-    
-    - 安装包此处下载
+- 安装5.15
 
     ```bash
+    cd /home/fanghaodu
+    wget https://download.qt.io/archive/qt/5.15/5.15.2/single/qt-everywhere-src-5.15.2.tar.xz 
+    
     tar -xvf qt-everywhere-src-5.15.2.tar.xz
-
+    
     cd qt-everywhere-src-5.15.2 
     
     //修改.qt-everywhere-src-5.15.2/qtbase/src/corelib/global/qglobal.h, 增加 "#include <limits>"在"#include <alogrithm>"后面
+    
+    sudo apt-get install -y qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+    //Ubuntu21.04开始qt5-default包定位不到，需要安装上面几个包替代。 
+    
+    
+    //安装一些包
+    sudo apt-get install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev
+    sudo apt-get install -y libx11-dev libxmu-dev 
+    sudo apt-get install -y libmotif-dev
+    sudo apt-get install -y libcanberra-gtk-module
+    sudo apt-get install -y \
+      libxcb1 \
+      libxcb-util1 \
+      libx11-xcb1 \
+      libxrender1 \
+      libxi6 \
+      libxext6 \
+      libxcb-keysyms1 \
+      libxcb-image0 \
+      libxcb-shm0 \
+      libxcb-icccm4 \
+      libxcb-sync1 \
+      libxcb-xfixes0 \
+      libxcb-shape0 \
+      libxcb-randr0 \
+      libxcb-render-util0 \
+      libxcb-glx0 \
+      libxcb-xinerama0
+      libxfixes-dev libxcb-xfixes0-dev
+      
+    sudo apt install libx11-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev
+    
+    
+    sudo apt-get install apt-file autoconf automake automake1.11 tcl8.6-dev tk8.6-dev libglew-dev libglw1-mesa-dev gfortran inventor-dev libxaw7-dev libxerces-c-dev libxmltok1-dev libxi-dev libclutter-gtk-1.0-0 libxmlrpc-core-c3-dev tclxml tclxml-dev libgtk2.0-dev libxpm-dev x11proto-gl-dev x11proto-input-dev -y
+    
+    sudo apt-get install libxcb1-dev libx11-xcb-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev -y
+    sudo apt-get install build-essential libgl1-mesa-dev -y
+    sudo apt-get install '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev -y
+    sudo apt-get install flex bison gperf libicu-dev libxslt-dev ruby -y
+    sudo apt-get install libx11-* -y
+sudo apt-get install libxcb-* -y
+    sudo apt-get install libxcb* -y
 
-    ./configure
-
+    ./configure -skip qtvirtualkeyboard -skip qtlocation -xcb// 跳过这两个包的编译，一个是地图的，一个是虚拟键盘的，这个安装包可能缺这两包的源代码，干脆跳过, -xcb很关键，涉及到libqxcb.so这个库
+    
+    //默认安装在/usr/local/Qt-5.15.2, -prefix 显式指定路径
+    
     //等待一会，第一个选项选o，第二个选项选y,如果中间出错了，需要清除缓存之后再重新安装
     sudo rm -rf config.cache
     ./configure 
-    ```
-
+```
+    
     - 开始编译
     
     ```bash
-    make -j24 // 半小时
+    // 有点久，半小时起步
+    make -j24 
     sudo make install
+    
+    
     ```
 
     - qtchooser路径配置
-    这里的路径配置可能和上面的5.14的产生交叉了，如果没有安装上述5.14的话，qtchooser的.conf文件可能不在/usr/lib/x86_64-linux-gnu/qt-default/qtchooser路径下，我是执行了下面的命令后，发现在原来的default.conf下出现了一个新的conf
     ```bash
-    qtchooser -install qt-5.15.2 /usr/local/Qt-5.15.2/bin/qmake
-    export QT_SELECT=qt-5.15.2
-    ```
-
-    ![alt text](../md_pics/conf.png)
-
-    这时候要在这个新的conf文件下，去做原来在default.conf下的操作，只是路径要变成下面这两个，因为手动编译安装的qt路径不一样：
+    cd /usr/lib/x86_64-linux-gnu/qt-default/qtchooser
+    sudo gedit default.conf
+    
+    //删去默认的，找到安装路径下的，编辑如下：
+    /usr/local/Qt-5.15.2/bin //qmake所在路径
+    /usr/local/Qt-5.15.2/lib  //qt的cmake所在路径
+```
+    - qmake设置
+    
     ```bash
-    /home/fanghaodu/qt-everywhere-src-5.15.2/qtbase/bin
-    /home/fanghaodu/qt-everywhere-src-5.15.2/qtbase
+    
+    sudo gedit /etc/profile
+    // 可视化界面打开后写入以下指令
+    export QTDIR=/usr/local/Qt-5.15.2  //改为安装路径的bin的前一级
+    export PATH=$QTDIR/bin:$PATH
+    export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
     ```
-
-    然后/etc/profile里的QT_DIR要变：
-
-    ```bash
-    export QTDIR=/home/fanghaodu/qt-everywhere-src-5.15.2/qtbase  //改为安装路径的bin的前一级
-    ```
-
+    
     这时候检验一下qt版本对了不：
     ```bash
-    qmake -v //5.15.2就对了
+    qmake -v //5.15.x就对了
     ```
 
+![image-20250520135252576](C:\code\knowhow-transfer\md_pics\image-20250520135252576.png)
 
-
-
-
-
-
-
-- 继续运行以下
-```bash
-sudo apt-get install -y dpkg
-sudo apt-get install -y libgl1-mesa-dev 
-sudo apt-get install -y libglu1-mesa-dev 
-sudo apt-get install -y libx11-dev libxmu-dev 
-sudo apt-get install -y libmotif-dev
-sudo apt-get install -y freeglut3 freeglut3-dev binutils-gold
-sudo apt-get install -y libcanberra-gtk-module
-```
 ### G4 Install
-- 为cmake指定寻找qt库的路径:
+- 为cmake指定寻找qt库的路径（暂时的把这个全局变量改成qt的cmake路径）:
 ```bash
 # export CMAKE_PREFIX_PATH=home/geant4/Qt5/5.14.2/gcc_64/lib/cmake 这是5.14的安装,下面是5.15的安装
-export CMAKE_PREFIX_PATH=/home/fanghaodu/qt5.15.2/lib/cmake
-sudo apt-get install build-essential apt-file gcc g++ autoconf automake automake1.11 tcl8.6-dev tk8.6-dev libglu1-mesa-dev libgl1-mesa-dev libxt-dev libxmu-dev libglew-dev libglw1-mesa-dev gfortran inventor-dev libxaw7-dev freeglut3-dev libxerces-c-dev libxmltok1-dev libxi-dev libclutter-gtk-1.0-0 cmake libxmlrpc-core-c3-dev tclxml tclxml-dev libexpat1-dev libgtk2.0-dev libxpm-dev x11proto-gl-dev x11proto-input-dev -y
- 
-sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools 
-//Ubuntu21.04开始qt5-default包定位不到，需要安装上面几个包替代。 
+export CMAKE_PREFIX_PATH=/usr/local/Qt-5.15.2/lib/cmake
+
 ```
 
 - G4源码下载解压build
@@ -223,32 +204,51 @@ sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 cd /home/geant4
 wget https://gitlab.cern.ch/geant4/geant4/-/archive/v11.3.1/geant4-v11.3.1.tar.gz
 tar -xvf geant4-v11.3.1.tar.gz
+
+
+
 mkdir geant4-v11.3.1-install
 mkdir geant4-v11.3.1-build
 cd geant4-v11.3.1-build //这一步一定要执行
 
-//下面的命令有点长，包含了参数配置，qt5.15.2手动安装后，要改环境变量
-sudo cmake -DCMAKE_INSTALL_PREFIX=/home/geant4/geant4-v11.3.1-install -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_USE_RAYTRACE_X11=ON -DGEANT4_USE_GDML=ON -DGEANT4_INSTALL_DATA=OFF -DGEANT4_USE_QT=ON  -DQT_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5 -DQt5Core_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5Core -DQt5Gui_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5Gui -DQt5OpenGL_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5OpenGL -DQt5Widgets_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5Widgets -DQt5_DIR=/home/fanghaodu/qt5.15.2/lib/cmake/Qt5 /home/geant4/geant4-v11.3.1
-// DGEANT4_INSTALL_DATA=ON会自动下载data文件夹至home/geant4/geant4-v11.3.1-build文件夹中
-// 速度太慢容易出错，建议OFF，make install 完成之后手动下载
+ccmake ../geant4-v11.3.1 //cmake不允许在源代码目录下搞。出现下述界面，按c进行配置，然后按e退出，出现配置项目，按图配置，再按c配置，然后退出
+
+
+//下面的命令,包含了参数配置，qt5.15.2手动安装后，要改环境变量
+sudo cmake -DQT_DIR=/usr/local/Qt-5.15.2/lib/cmake/Qt5 -DQt5Core_DIR=/usr/local/Qt-5.15.2/lib/cmake/Qt5Core -DQt5Gui_DIR=/usr/local/Qt-5.15.2/lib/cmake/Qt5Gui -DQt5OpenGL_DIR=/usr/local/Qt-5.15.2/lib/cmake/Qt5OpenGL -DQt5Widgets_DIR=/usr/local/Qt-5.15.2/lib/cmake/Qt5Widgets -DQt5_DIR=/usr/local/Qt-5.15.2/lib/cmake/Qt5 -DQt53DCore_DIR=/usr/local/Qt-5.15.2/lib/cmake/Qt53DCore   /home/geant4/geant4-v11.3.1
+
+
+// DGEANT4_INSTALL_DATA=ON会自动下载data文件夹至home/geant4/geant4-v11.3.1-build文件夹中,速度太慢容易出错，建议OFF，make install 完成之后手动下载
+
+
 sudo hwclock -s //可能出现警告make[1]: warning:  Clock skew detected.  Your build may be incomplete. 是wsl时间戳的问题，同步一下和windows的事件
 sudo make -j24 
 sudo make install
 ```
-- 添加路径
+
+
+
+
+![image-20250519195250328](C:\code\knowhow-transfer\md_pics\image-20250519195250328.png)
+
+![image-20250521215608018](C:\code\knowhow-transfer\md_pics\image-20250521215608018.png)
+
+
+
+- 添加数据包的路径
 ```bash
 gedit ~/.bashrc
-// 末尾加以下两句
+// 末尾加以下
 source  /home/geant4/geant4-v11.3.1-install/bin/geant4.sh
-source  /home/geant4/geant4-v11.3.1-install/share/Geant4/geant4make/geant4make.sh
+#source  /home/geant4/geant4-v11.3.1/geant4-v11.3.1-install/share/Geant4/geant4make/geant4make.sh
 ```
-- 手动下载data包
-查看geant4make.sh中的Datasets配置：
 
-![alt text](../md_pics/G4Datasets.png)
 
-根据版本信息在官网下载至`/home/geant4/geant4-v11.3.1-install/share/Geant4/data`目录
+根据版本信息在官网下载至`/home/geant4/geant4-v11.3.1-install/share/Geant4/data`目录，并解压
 ```bash
+cd /home/geant4/geant4-v11.3.1-install/share/Geant4
+mkdir data
+cd data
 wget https://cern.ch/geant4-data/datasets/G4NDL.4.7.1.tar.gz
 wget https://cern.ch/geant4-data/datasets/G4EMLOW.8.6.1.tar.gz
 wget https://cern.ch/geant4-data/datasets/G4PhotonEvaporation.6.1.tar.gz
@@ -261,9 +261,6 @@ wget https://cern.ch/geant4-data/datasets/G4ABLA.3.3.tar.gz
 wget https://cern.ch/geant4-data/datasets/G4INCL.1.2.tar.gz
 wget https://cern.ch/geant4-data/datasets/G4ENSDFSTATE.3.0.tar.gz
 wget https://cern.ch/geant4-data/datasets/G4CHANNELING.1.0.tar.gz
-```
-并解压
-```bash
 tar -xvf G4NDL.4.7.1.tar.gz
 tar -xvf G4EMLOW.8.6.1.tar.gz
 tar -xvf G4PhotonEvaporation.6.1.tar.gz
@@ -278,7 +275,6 @@ tar -xvf G4ENSDFSTATE.3.0.tar.gz
 tar -xvf G4CHANNELING.1.0.tar.gz
 ```
 
-
 ### 运行测试
 
 ```bash
@@ -287,17 +283,172 @@ mkdir build
 cd build/
 source ~/.bashrc
 cmake ../
+
+//可能会出现Qt5::Core路径不对，ccmake改一下，统一改为/usr/local下的camke路径
+
 make -j24
 ```
+![image-20250519220109765](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20250519220109765.png)
+
+
+
 编译成功后在build找可执行文件`exampleB1`,执行
+
 ```bash
 ./exampleB1
 ```
+其他example也测试下
+
+
+
 出现以下gui说明安装成功：
 
 ![alt text](../md_pics/G4_success.png)
 
 
 
+# Linux下的Gate安装
 
+- ## ITK安装
+
+```
+cd /home
+mkdir gate
+cd gate
+mkdir itk
+cd itk
+wget https://github.com/InsightSoftwareConsortium/ITK/releases/download/v5.4.2/InsightToolkit-5.4.2.tar.gz
+
+tar -zxvf InsightToolkit-5.4.2.tar.gz
+cd InsightToolkit-5.4.2
+mkdir bin
+cd bin
+
+ccmake .. //搞成下图的样子，注意Module_ITKReview=ON要打开taggle才看得到
+cmake ..
+
+//gate/itk/InsightToolkit-5.1.1/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImageChangePhotometricInterpretation.h,添加头文件<limits>
+
+make -j24
+make install //时间稍长
+
+```
+
+
+
+![image-20250521125122094](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20250521125122094.png)
+
+
+
+# 安装root
+
+```
+cd /home/gate
+mkdir ROOT
+cd ROOT
+
+wget https://root.cern/download/root_v6.32.02.source.tar.gz
+tar -zxvf root_v6.32.02.source.tar.gz
+
+mkdir root-6.32.02-build
+mkdir root-6.32.02-install
+cd root-6.32.02-build
+cmake -DCMAKE_INSTALL_PREFIX=/home/gate/root/root-6.32.02-install  -DGEANT4_USE_OPENGL_X11=ON -DGEANT4_BUILD_MULTITHREADED=ON /home/gate/root/root-6.32.02
+
+make -j10  //搞大了内存不够统一杀c++进程
+sudo make install
+
+gedit ~/.bashrc
+source /home/gate/root/root-6.32.02-install/bin/thisroot.sh
+
+cd /home/gate/root/root-6.32.02-install/bin
+./root
+
+//出现如下图说明成功
+```
+
+![image-20250521214047355](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20250521214047355.png)
+
+
+
+
+
+# Gate 9.4.1 安装(对应G4 11.2.x)
+
+```
+cd /home/gate
+wget https://github.com/OpenGATE/Gate/archive/refs/tags/v9.4.1.tar.gz
+tar -zxvf v9.4.1.tar.gz
+
+mkdir gate-9.4.1-build
+mkdir gate-9.4.1-install
+cd gate-9.4.1-build
+
+sudo apt-get install libxml2-dev
+
+ccmake ../Gate-9.4.1
+
+
+```
+
+
+
+**![image-20250522103301764](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20250522103301764.png)**
+
+
+
+
+
+```
+gedit ~/.bashrc
+export PATH=/home/gate/gate-9.4.1-install/bin:$PATH
+
+//test
+source ~/.bashrc
+cd /home/gate/gate-9.4.1-install/bin
+./Gate
+```
+
+![image-20250522103715619](C:\code\knowhow-transfer\md_pics\image-20250522103715619.png)
+
+
+
+复制benchmark文件夹：去官网下在9.0的，找到里面的benchmark文件夹，复制到Gate-9.4.1下面
+
+到benchPET.mac文件把首行二行的注释换一下
+
+![image-20250522135101642](C:\code\knowhow-transfer\md_pics\image-20250522135101642.png)
+
+
+
+digitizer语法变更：
+
+```
+apt-get install pip
+
+
+
+cd /home/gate/Gate-9.4.1
+git clone --recursive https://github.com/OpenGATE/GateTools.git
+cd GateTools
+pip install .
+pip install gatetools
+
+gedit ~/.bashrc
+export PATH=/home/gate/Gate-9.4.1/GateTools/gatetools/bin
+```
+
+
+
+
+
+变更命令：
+
+```sh
+cd /home/gate/Gate-9.4.1/benchmarks/benchPET
+gt_digi_mac_converter.py -i digitizer.mac -o digitizer_new.mac -sd LSO -multi SinglesDigitizer
+
+```
+
+![image-20250522140216934](C:\code\knowhow-transfer\md_pics\image-20250522140216934.png)
 
