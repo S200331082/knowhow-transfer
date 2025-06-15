@@ -16,12 +16,13 @@
    $$
    q=G(p, I)=a_kI+b_k
    $$
+   
 
    
 
    - 计算后 $q$ 与 $I$ 接近，该计算方式是对PET图像SUV值的一种破坏，尽管肉眼看上去有解剖结构的对比度，但对SUV值有影响，进而影响诊断过程
    - GIF强制PET向MRI靠近，PET本身的结构没有被保留，例如眼球部分，
-   - 半径 $r$ 控制平滑程度，$\epsilon$ 影响几乎没有，因为 $COV(PET, MRI)$ 巨大
+   - 半径 $r$ 控制平滑程度， $\epsilon$ 影响几乎没有，因为 $COV(PET, MRI)$ 巨大
 
 2. 临床上阅片关心SUV绝对值还是不同区域之间的相对值，输出图像必须要具有临床意义
 
@@ -61,9 +62,10 @@ $$
   
   
   $$
+  
   \min_{q}\ \underbrace{\|q-p\|^{2}}_{\text{保持}\operatorname{SUV}\text{强度}}+\lambda\underset{\text{去噪}/\text{边缘保留}}{\underbrace{TV(q)}}+\mu\underset{\text{结构引导}: \ \text{边缘与}\operatorname{MR}\text{一致}}{\underbrace{\|\nabla q-\nabla I\|^{2}}}
-  \\
-TV(q)=\sum_{x,y,z}^{} \left | \frac{\partial q}{\partial x}  \right | +\left | \frac{\partial q}{\partial y}  \right |+\left | \frac{\partial q}{\partial z}  \right |
+\\
+  TV(q)=\sum_{x,y,z}^{} \left | \frac{\partial q}{\partial x}  \right | +\left | \frac{\partial q}{\partial y}  \right |+\left | \frac{\partial q}{\partial z}  \right |
   $$
   
   
@@ -230,7 +232,7 @@ TV(q)=\sum_{x,y,z}^{} \left | \frac{\partial q}{\partial x}  \right | +\left | \
 
   - PET天然可以稀疏表示，可以利用字典学习的思想
 
-  - 联合字典训练：从配对中提取Patch对 $\{p_i,I_i\}$ ，学习联合字典 $D=[D_p;D_I]$ ，使得 $p_i\approx D_p\alpha_i$ 和 $I_i\approx D_I\alpha_i$ 共享稀疏系数$\alpha_i$
+  - 联合字典训练：从配对中提取Patch对 $\{p_i,I_i\}$ ，学习联合字典 $D=[D_p;D_I]$ ，使得 $p_i\approx D_p\alpha_i$ 和 $I_i\approx D_I\alpha_i$ 共享稀疏系数 $\alpha_i$
   
   - 图像重建，用MR图像稀疏编码得到 $\alpha_i$ ，再通过 $D_p$ 重建PET：
     
