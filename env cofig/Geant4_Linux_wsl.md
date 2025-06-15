@@ -151,6 +151,7 @@ sudo apt-get install libxcb-* -y
     //等待一会，第一个选项选o，第二个选项选y,如果中间出错了，需要清除缓存之后再重新安装
     sudo rm -rf config.cache
     ./configure 
+    ```
 ```
     
     - 开始编译
@@ -161,7 +162,7 @@ sudo apt-get install libxcb-* -y
     sudo make install
     
     
-    ```
+```
 
     - qtchooser路径配置
     ```bash
@@ -181,14 +182,14 @@ sudo apt-get install libxcb-* -y
     export QTDIR=/usr/local/Qt-5.15.2  //改为安装路径的bin的前一级
     export PATH=$QTDIR/bin:$PATH
     export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH
-    ```
-    
+```
+
     这时候检验一下qt版本对了不：
     ```bash
     qmake -v //5.15.x就对了
     ```
 
-![image-20250520135252576](C:\code\knowhow-transfer\md_pics\image-20250520135252576.png)
+![image-20250520135252576](../md_pics/image-20250520135252576.png)
 
 ### G4 Install
 - 为cmake指定寻找qt库的路径（暂时的把这个全局变量改成qt的cmake路径）:
@@ -229,9 +230,9 @@ sudo make install
 
 
 
-![image-20250519195250328](C:\code\knowhow-transfer\md_pics\image-20250519195250328.png)
+![image-20250519195250328](../md_pics/image-20250519195250328.png)
 
-![image-20250521215608018](C:\code\knowhow-transfer\md_pics\image-20250521215608018.png)
+![image-20250521215608018](../md_pics/image-20250521215608018.png)
 
 
 
@@ -288,7 +289,7 @@ cmake ../
 
 make -j24
 ```
-![image-20250519220109765](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20250519220109765.png)
+![image-20250519220109765](../md_pics/image-20250519220109765.png)
 
 
 
@@ -336,7 +337,7 @@ make install //时间稍长
 
 
 
-![image-20250521125122094](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20250521125122094.png)
+![image-20250521125122094](C:\code\knowhow-transfer\md_pics\image-20250521125122094.png)
 
 
 
@@ -367,7 +368,7 @@ cd /home/gate/root/root-6.32.02-install/bin
 //出现如下图说明成功
 ```
 
-![image-20250521214047355](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20250521214047355.png)
+![image-20250521214047355](../md_pics/image-20250521214047355.png)
 
 
 
@@ -393,7 +394,7 @@ ccmake ../Gate-9.4.1
 
 
 
-**![image-20250522103301764](C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20250522103301764.png)**
+**![image-20250522103301764](../md_pics/image-20250522103301764.png)**
 
 
 
@@ -409,7 +410,7 @@ cd /home/gate/gate-9.4.1-install/bin
 ./Gate
 ```
 
-![image-20250522103715619](C:\code\knowhow-transfer\md_pics\image-20250522103715619.png)
+![image-20250522103715619](../md_pics/image-20250522103715619.png)
 
 
 
@@ -450,5 +451,5 @@ gt_digi_mac_converter.py -i digitizer.mac -o digitizer_new.mac -sd LSO -multi Si
 
 ```
 
-![image-20250522140216934](C:\code\knowhow-transfer\md_pics\image-20250522140216934.png)
+![image-20250522140216934](../md_pics/image-20250522140216934.png)
 

@@ -4,9 +4,9 @@
 
 首先固定PET配准MRI，利用MRI引导PET重建，使用引导图像滤波[Guided image filtering, GIF]([Guided Image Filtering | IEEE Journals & Magazine | IEEE Xplore](https://ieeexplore.ieee.org/abstract/document/6319316/))，结果如下：
 
-![image-20250612113203902](C:\code\knowhow-transfer\md_pics\image-20250612113203902.png)
+![image-20250612113203902](../md_pics/image-20250612113203902.png)
 
-![image-20250612142316229](C:\code\knowhow-transfer\md_pics\image-20250612142316229.png)
+![image-20250612142316229](../md_pics/image-20250612142316229.png)
 
 
 
@@ -45,7 +45,7 @@ $$
 
 > **结果**：
 
-![image-20250612190009786](C:\code\knowhow-transfer\md_pics\image-20250612190009786.png)
+![image-20250612190009786](../md_pics/image-20250612190009786.png)
 
 尽管提供残差有了保护边效果，但是还是太像MR了，而且强度分布还是受到了破坏，因为初始的PET强度和MR相差就很大，且残差项有可能出现无意义的负数。其实本质还是因为线性模型没有办法很好的刻画PET和MR之间的联系，GIF最大的用途还是用于同一图像的滤波去噪
 
@@ -138,13 +138,13 @@ $$
   
   结果：似乎好很多，既有保变效果，又保存了PET的一些关键结构，然而这是固定PET配准MRI，MRI的结构信息是被压缩了的，可视化结果可能稍弱，当然参数要调一下
   
-  ![image-20250613170006262](C:\code\knowhow-transfer\md_pics\image-20250613170006262.png)
+  ![image-20250613170006262](../md_pics/image-20250613170006262.png)
 
 
 
 ​		如果固定MRI配准PET，分辨率肉眼可见会更高一点，结果如下：
 
-![image-20250613173848854](C:\code\knowhow-transfer\md_pics\image-20250613173848854.png)
+![image-20250613173848854](../md_pics/image-20250613173848854.png)
 
 
 
@@ -210,7 +210,7 @@ $$
   
   轻信了GPT，此方法不太行，代码实现的时候本质上还是线性变换模型，只适合去噪，结果如下：
   
-  ![image-20250614170406906](C:\code\knowhow-transfer\md_pics\image-20250614170406906.png)
+  ![image-20250614170406906](../md_pics/image-20250614170406906.png)
   
   
 

@@ -103,7 +103,7 @@
    cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=Debug
    ```
 
-8. ![image-20250531155549383](C:\code\knowhow-transfer\md_pics\image-20250531155549383.png)
+8. ![image-20250531155549383](../md_pics/image-20250531155549383.png)
 
    就可以查看调试信息了，gate同理哦
 
