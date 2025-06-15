@@ -17,6 +17,8 @@
    q=G(p, I)=a_kI+b_k
    $$
 
+   
+
    - 计算后 $q$ 与 $I$ 接近，该计算方式是对PET图像SUV值的一种破坏，尽管肉眼看上去有解剖结构的对比度，但对SUV值有影响，进而影响诊断过程
    - GIF强制PET向MRI靠近，PET本身的结构没有被保留，例如眼球部分，
    - 半径 $r$ 控制平滑程度，$\epsilon$ 影响几乎没有，因为 $COV(PET, MRI)$ 巨大
@@ -56,12 +58,18 @@ $$
 **所以GIF这种线性模型可以不用考虑了，考虑一些利用迭代展开、字典学习的方式，以期通过非线性的的方式刻画两种模态之间的关系**
 
 - **正则项**
+  
+  
   $$
   \min_{q}\ \underbrace{\|q-p\|^{2}}_{\text{保持}\operatorname{SUV}\text{强度}}+\lambda\underset{\text{去噪}/\text{边缘保留}}{\underbrace{TV(q)}}+\mu\underset{\text{结构引导}: \ \text{边缘与}\operatorname{MR}\text{一致}}{\underbrace{\|\nabla q-\nabla I\|^{2}}}
   \\
-  TV(q)=\sum_{x,y,z}^{} \left | \frac{\partial q}{\partial x}  \right | +\left | \frac{\partial q}{\partial y}  \right |+\left | \frac{\partial q}{\partial z}  \right |
+TV(q)=\sum_{x,y,z}^{} \left | \frac{\partial q}{\partial x}  \right | +\left | \frac{\partial q}{\partial y}  \right |+\left | \frac{\partial q}{\partial z}  \right |
   $$
-
+  
+  
+  
+  
+  
   ```python
   import torch
   import torch.nn.functional as F
@@ -149,9 +157,13 @@ $$
 
 
 - **联合双边滤波**
+
+  
   $$
   q(x)=\frac{1}{W(x)}\sum_{y\in\Omega}G_s(\|x-y\|)\cdot G_r(\|I(x)-I(y)\|)\cdot p(y)
   $$
+
+  
 
   - $x(i,j)$：中心像素；$y(k,l)$：领域像素；邻域 $\Omega$ 半径自选
 
@@ -160,12 +172,12 @@ $$
   - $G_r=exp(-\frac {\nabla I}{2\sigma_s^2})$：强度高斯核（由PET的强度差异决定滤波权重）
 
   - $W(x)=\sum_{y\in\Omega}G_s(\|x-y\|)\cdot G_r(\|I(x)-I(y)\|)$：归一化因子
-  
+
   - 可将将 $G_r$的强度计算替换为PET与MR的联合相似性
     $$
   G_r=\exp\left(-\frac{(p(x)-p(y))^2+\alpha(I(x)-I(y))^2}{2\sigma_r^2}\right)
     $$
-  
+
   ```python
   def joint_bilateral_filter_torch(mr, pet, radius, sigma_s, sigma_r, alpha):
       device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -205,25 +217,29 @@ $$
       q /= weight_sum
       return q
   ```
+
   
-  
-  
+
   轻信了GPT，此方法不太行，代码实现的时候本质上还是线性变换模型，只适合去噪，结果如下：
-  
+
   ![image-20250614170406906](../md_pics/image-20250614170406906.png)
-  
+
   
 
 - **字典学习表示**
 
   - PET天然可以稀疏表示，可以利用字典学习的思想
 
-  - 联合字典训练：从配对中提取Patch对$\{p_i,I_i\}$，学习联合字典$D=[D_p;D_I]$，使得$p_i\approx D_p\alpha_i$和$I_i\approx D_I\alpha_i$共享稀疏系数$\alpha_i$
+  - 联合字典训练：从配对中提取Patch对 $\{p_i,I_i\}$ ，学习联合字典 $D=[D_p;D_I]$ ，使得 $p_i\approx D_p\alpha_i$ 和 $I_i\approx D_I\alpha_i$ 共享稀疏系数$\alpha_i$
   
-  - 图像重建，用MR图像稀疏编码得到$\alpha_i$，再通过$D_p$重建PET：
+  - 图像重建，用MR图像稀疏编码得到 $\alpha_i$ ，再通过 $D_p$ 重建PET：
+    
+  
     $$
-  q_i=D_p\cdot\arg\min_\alpha\|I_i-D_I\alpha\|^2+\|\alpha\|_1
+    q_i=D_p\cdot\arg\min_\alpha\|I_i-D_I\alpha\|^2+\|\alpha\|_1
     $$
+  
+  
   
   **结果还在跑，暂时没有**
 
