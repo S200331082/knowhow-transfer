@@ -337,7 +337,7 @@ make install //时间稍长
 
 
 
-![image-20250521125122094](C:\code\knowhow-transfer\md_pics\image-20250521125122094.png)
+![image-20250521125122094](../md_pics/image-20250521125122094.png)
 
 
 
@@ -418,7 +418,7 @@ cd /home/gate/gate-9.4.1-install/bin
 
 到benchPET.mac文件把首行二行的注释换一下
 
-![image-20250522135101642](C:\code\knowhow-transfer\md_pics\image-20250522135101642.png)
+![image-20250522135101642](../md_pics/image-20250522135101642.png)
 
 
 
