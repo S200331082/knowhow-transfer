@@ -11,7 +11,7 @@ wsl --update
 
 wsl --shutdown
 ```
-
+```
 #https://cloud-images.ubuntu.com/wsl/jammy/current/ 下载ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz
 
 mkdir D:\WSL\Ubuntu2204
@@ -27,6 +27,8 @@ usermod -aG sudo fanghaodu  # 赋予sudo权限
 
 #(exit)，然后在 PowerShell 中设置该用户为默认登录用户
 wsl --manage Ubuntu-22.04 --set-default-user fanghaodu
+```
+
 ```
 
 
