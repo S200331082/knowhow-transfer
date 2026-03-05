@@ -12,18 +12,21 @@ wsl --update
 wsl --shutdown
 ```
 
-- Microsoft store搜索下载“Ubuntu 22.04.x LTS”，设置用户名和密码；
+# https://cloud-images.ubuntu.com/wsl/jammy/current/ 下载ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz
 
--设置root
-```bash
-sudo passwd root
-// 设置密码
-// 后续只用su命令，输入密码进入root
+mkdir D:\WSL\Ubuntu2204
 
-wsl --manage Ubuntu-22.04 --set-default-user root 
-//powershell管理员打开，默认root登录，方便vscode直接修改文件
-//这样修改之后可能代码无法跳转，先把原用户文件夹下的.vscode-server删掉，然后重新连接，再到插件页面安装C++ package
+# 执行导入操作（请根据你的实际路径和文件名修改）
 
+wsl --import Ubuntu-22.04 D:\WSL\Ubuntu2204 D:\ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz --version 2
+
+#导入后，系统默认以 root 登录，你需要创建一个普通用户并设置为默认用户
+useradd -m -s /bin/bash fanghaodu
+passwd fanghaodu  # 设置密码
+usermod -aG sudo fanghaodu  # 赋予sudo权限
+
+#(exit)，然后在 PowerShell 中设置该用户为默认登录用户
+wsl --manage Ubuntu-22.04 --set-default-user fanghaodu
 ```
 
 
