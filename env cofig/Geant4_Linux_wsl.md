@@ -12,11 +12,11 @@ wsl --update
 wsl --shutdown
 ```
 
-# https://cloud-images.ubuntu.com/wsl/jammy/current/ 下载ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz
+#https://cloud-images.ubuntu.com/wsl/jammy/current/ 下载ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz
 
 mkdir D:\WSL\Ubuntu2204
 
-# 执行导入操作（请根据你的实际路径和文件名修改）
+#执行导入操作（请根据你的实际路径和文件名修改）
 
 wsl --import Ubuntu-22.04 D:\WSL\Ubuntu2204 D:\ubuntu-jammy-wsl-amd64-ubuntu22.04lts.rootfs.tar.gz --version 2
 
