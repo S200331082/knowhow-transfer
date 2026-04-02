@@ -36,7 +36,56 @@
            "args": [],
            "stopAtEntry": false,
            "cwd": "/home/geant4/geant4-v11.3.1/examples/basic/B1/build",
-           "environment": [],
+           "environment": [   //注意看路径，name和路径里的数据文件value可能不一样，运行没问题，调试时容易找不到，environment显式指定
+                {
+                    "name": "G4ABLADATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/ABLA3.3"
+                },
+                {
+                    "name": "G4LEDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/EMLOW8.6.1"
+                },
+                {
+                    "name": "G4NEUTRONHPDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/NDL4.7.1"
+                },
+                {
+                    "name": "G4PARTICLEXSDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/PARTICLEXS4.1"
+                },
+                {
+                    "name": "G4PIIDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/PII1.3"
+                },
+                {
+                    "name": "G4RADIOACTIVEDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/RadioactiveDecay6.1.2"
+                },
+                {
+                    "name": "G4REALSURFACEDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/RealSurface2.2"
+                },
+                {
+                    "name": "G4SAIDXSDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/SAIDDATA2.0"
+                },
+                {
+                    "name": "G4INCLDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/INCL1.2"
+                },
+                {
+                    "name": "G4LEVELSDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/PhotonEvaporation6.1"
+                },
+                {
+                    "name": "G4ENSDFSTATEDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/ENSDFSTATE3.0"
+                },
+                {
+                    "name": "G4CHANNELINGDATA",
+                    "value": "/home/fanghaodu/.conda/envs/geant4/share/Geant4/data/CHANNELING1.0"
+                }
+            ],
            "externalConsole": false,
            "MIMode": "gdb",
            "miDebuggerPath": "/usr/bin/gdb",
